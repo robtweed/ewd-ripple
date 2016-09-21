@@ -11,6 +11,10 @@ This repository holds the code used for the Node.js / EWD 3-based Middle Tier fo
 
 Ripple OSI integrates OpenEHR systems.
 
+## Installing
+
+    npm install ewd-ripple
+
 
 ## License
 
