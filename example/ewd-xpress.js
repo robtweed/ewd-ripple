@@ -26,8 +26,6 @@
 
   16 May 2016
 
-  Example ewd-xpress Startup file for Ripple OSI Middle Tier
-
 */
 
 
@@ -47,6 +45,34 @@ var config = {
 
 var ewdXpress = require('ewd-xpress').master;
 var xp = ewdXpress.intercept();
+
+var bodyParser = require('body-parser');
+xp.app.use(bodyParser.json());
+
 xp.app.use('/api', xp.qx.router());
+
+/*
+  Optiional - add custom Express middleware, eg:
+
+  var xp = ewdXpress.intercept();
+  xp.app.use('/api', xp.router());
+
+
+  xp.app.get('/testx', function(req, res) {
+    console.log('*** /testx query: ' + JSON.stringify(req.query));
+    res.send({
+      hello: 'world',
+      query: JSON.stringify(req.query)
+    });
+    // or use ewd-qoper8-express handler
+    //xp.qx.handleMessage(req, res);
+  });
+*/
+
+xp.q.on('started', function() {
+  if (!this.userDefined) this.userDefined = {
+    pasModule: 'mysqlPAS'
+  };
+});
 
 ewdXpress.start(config);
